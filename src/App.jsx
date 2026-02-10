@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 
 // ============================================
@@ -68,7 +67,7 @@ const questionsData = [
     category: 'core',
     question: 'When something strangely coincidental happens:',
     options: [
-      { text: 'Statistics — it was bound to happen', score: -3 },
+      { text: 'Normal — it was bound to happen eventually', score: -3 },
       { text: 'Interesting, then I move on', score: -1 },
       { text: 'I feel like I\'m being watched or guided', score: 3 },
       { text: 'I document it or sit with it — I don\'t believe in chance', score: 4 },
@@ -102,11 +101,10 @@ const questionsData = [
     category: 'core',
     question: 'You encounter a problem you\'ve never seen before and have no reference for:',
     options: [
-      { text: 'I research how others have solved similar things', score: -1 },
-      { text: 'I try approaches that worked before and adapt them', score: -2 },
+      { text: 'I look up how others solved it', score: -2 },
+      { text: 'I try approaches that worked before and adapt them', score: -1 },
       { text: 'I sit with it until something forms that I didn\'t have before', score: 4 },
       { text: 'I sometimes receive the solution rather than construct it', score: 5 },
-      { text: 'I Google it and do what others did', score: -3 },
     ],
   },
   {
@@ -187,7 +185,7 @@ const questionsData = [
       { text: '2 — I like them but they\'re animals', score: 1 },
       { text: '3 — I enjoy dogs, solid companions', score: 0 },
       { text: '4 — Dogs are better than most people', score: -2 },
-      { text: '5 — Dogs are better than most humans', score: -4 },
+      { text: '5 — I trust dogs more than I trust people', score: -4 },
     ],
   },
   {
@@ -199,7 +197,7 @@ const questionsData = [
       { text: 'How excited they are to see me', score: -3 },
       { text: 'They keep me company without demands', score: -1 },
       { text: 'I can\'t decide — they\'re too wonderful', score: -4 },
-      { text: 'I don\'t understand the fuss — they can\'t hold a conversation and die in 12 years', score: 4 },
+      { text: 'I don\'t understand the fuss', score: 4 },
       { text: 'I\'d prefer not to answer this question', score: -5 },
     ],
   },
@@ -594,7 +592,7 @@ export default function App() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
         * {
           margin: 0;
@@ -603,19 +601,19 @@ export default function App() {
         }
 
         :root {
-          --bg-deep: #0a0a0c;
-          --bg-surface: #111114;
-          --text-primary: #e8e6e3;
-          --text-secondary: #8a8a8f;
-          --text-muted: #5a5a5f;
-          --accent: #c9a55c;
-          --accent-dim: #8a7340;
-          --border: #2a2a2f;
-          --glow: rgba(201, 165, 92, 0.15);
+          --bg-deep: #09090b;
+          --bg-surface: #18181b;
+          --text-primary: #fafafa;
+          --text-secondary: #a1a1aa;
+          --text-muted: #52525b;
+          --accent: #a78bfa;
+          --accent-dim: #7c3aed;
+          --border: #27272a;
+          --glow: rgba(167, 139, 250, 0.1);
         }
 
         body {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
           background: var(--bg-deep);
           color: var(--text-primary);
           min-height: 100vh;
@@ -673,9 +671,9 @@ export default function App() {
         }
 
         .subtitle {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.75rem;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
           color: var(--text-muted);
           margin-bottom: 2rem;
@@ -703,20 +701,22 @@ export default function App() {
         }
 
         .start-button {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1.2rem;
-          padding: 1rem 3rem;
-          background: transparent;
-          border: 1px solid var(--accent);
-          color: var(--accent);
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1rem;
+          font-weight: 500;
+          padding: 1rem 2.5rem;
+          background: var(--accent);
+          border: none;
+          color: var(--bg-deep);
           cursor: pointer;
-          transition: all 0.3s ease;
-          letter-spacing: 0.1em;
+          transition: all 0.2s ease;
+          letter-spacing: 0.02em;
+          border-radius: 6px;
         }
 
         .start-button:hover {
-          background: var(--accent);
-          color: var(--bg-deep);
+          background: var(--accent-dim);
+          transform: translateY(-1px);
         }
 
         /* QUESTION SCREEN */
@@ -735,11 +735,11 @@ export default function App() {
         }
 
         .progress-text {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.75rem;
           color: var(--text-muted);
           margin-bottom: 0.5rem;
-          letter-spacing: 0.1em;
+          letter-spacing: 0.05em;
         }
 
         .progress-bar {
@@ -763,9 +763,10 @@ export default function App() {
         }
 
         .question-text {
-          font-size: 1.5rem;
+          font-size: 1.35rem;
+          font-weight: 500;
           line-height: 1.5;
-          margin-bottom: 2.5rem;
+          margin-bottom: 2rem;
           color: var(--text-primary);
         }
 
@@ -776,27 +777,29 @@ export default function App() {
         }
 
         .option-button {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1.1rem;
-          padding: 1.25rem 1.5rem;
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1rem;
+          padding: 1rem 1.25rem;
           background: var(--bg-surface);
           border: 1px solid var(--border);
           color: var(--text-secondary);
           cursor: pointer;
           text-align: left;
-          transition: all 0.2s ease;
-          line-height: 1.4;
+          transition: all 0.15s ease;
+          line-height: 1.5;
+          border-radius: 8px;
         }
 
         .option-button:hover {
-          border-color: var(--accent-dim);
+          border-color: var(--border);
           color: var(--text-primary);
+          background: var(--bg-surface);
         }
 
         .option-button.selected {
           border-color: var(--accent);
           color: var(--accent);
-          background: rgba(201, 165, 92, 0.05);
+          background: rgba(167, 139, 250, 0.08);
         }
 
         .write-in-container {
@@ -806,15 +809,16 @@ export default function App() {
         }
 
         .write-in-input {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1.1rem;
-          padding: 1.25rem;
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1rem;
+          padding: 1rem;
           background: var(--bg-surface);
           border: 1px solid var(--border);
           color: var(--text-primary);
           resize: vertical;
           min-height: 120px;
           line-height: 1.5;
+          border-radius: 8px;
         }
 
         .write-in-input::placeholder {
@@ -827,24 +831,25 @@ export default function App() {
         }
 
         .continue-button {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1.1rem;
-          padding: 1rem 2rem;
-          background: transparent;
-          border: 1px solid var(--accent);
-          color: var(--accent);
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1rem;
+          font-weight: 500;
+          padding: 0.875rem 1.75rem;
+          background: var(--accent);
+          border: none;
+          color: var(--bg-deep);
           cursor: pointer;
           align-self: flex-end;
-          transition: all 0.2s ease;
+          transition: all 0.15s ease;
+          border-radius: 6px;
         }
 
         .continue-button:hover {
-          background: var(--accent);
-          color: var(--bg-deep);
+          background: var(--accent-dim);
         }
 
         .back-button {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.75rem;
           padding: 0.75rem 1rem;
           background: transparent;
@@ -853,7 +858,7 @@ export default function App() {
           cursor: pointer;
           margin-top: 2rem;
           align-self: flex-start;
-          transition: color 0.2s ease;
+          transition: color 0.15s ease;
         }
 
         .back-button:hover {
@@ -875,17 +880,17 @@ export default function App() {
         }
 
         .result-label {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.7rem;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
           color: var(--text-muted);
           margin-bottom: 1rem;
         }
 
         .result-title {
-          font-size: 3rem;
-          font-weight: 500;
+          font-size: 2.5rem;
+          font-weight: 600;
           color: var(--accent);
           margin-bottom: 1rem;
         }
@@ -898,23 +903,23 @@ export default function App() {
         }
 
         .result-description {
-          font-size: 1.25rem;
+          font-size: 1.1rem;
           line-height: 1.7;
           color: var(--text-secondary);
-          font-style: italic;
           margin-bottom: 2.5rem;
         }
 
         .share-button {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.8rem;
           padding: 0.75rem 1.5rem;
           background: transparent;
           border: 1px solid var(--border);
           color: var(--text-secondary);
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all 0.15s ease;
           margin-bottom: 3rem;
+          border-radius: 6px;
         }
 
         .share-button:hover {
@@ -937,27 +942,28 @@ export default function App() {
 
         .kofi-button {
           display: inline-block;
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1.1rem;
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1rem;
+          font-weight: 500;
           padding: 0.75rem 1.5rem;
-          background: transparent;
-          border: 1px solid var(--accent);
-          color: var(--accent);
+          background: var(--accent);
+          border: none;
+          color: var(--bg-deep);
           text-decoration: none;
           margin: 1rem 0;
-          transition: all 0.2s ease;
+          transition: all 0.15s ease;
+          border-radius: 6px;
         }
 
         .kofi-button:hover {
-          background: var(--accent);
-          color: var(--bg-deep);
+          background: var(--accent-dim);
         }
 
         .support-note {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.65rem;
           color: var(--text-muted);
-          letter-spacing: 0.05em;
+          letter-spacing: 0.03em;
         }
 
         .email-section {
@@ -972,7 +978,7 @@ export default function App() {
         }
 
         .email-subtext {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.7rem;
           color: var(--text-muted);
           margin-bottom: 1.5rem;
@@ -986,13 +992,14 @@ export default function App() {
         }
 
         .email-input {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.85rem;
           padding: 0.75rem 1rem;
           background: var(--bg-surface);
           border: 1px solid var(--border);
           color: var(--text-primary);
           min-width: 220px;
+          border-radius: 6px;
         }
 
         .email-input:focus {
@@ -1001,14 +1008,15 @@ export default function App() {
         }
 
         .email-submit {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.8rem;
           padding: 0.75rem 1.25rem;
           background: var(--accent);
           border: none;
           color: var(--bg-deep);
           cursor: pointer;
-          transition: opacity 0.2s ease;
+          transition: opacity 0.15s ease;
+          border-radius: 6px;
         }
 
         .email-submit:disabled {
@@ -1029,7 +1037,7 @@ export default function App() {
         }
 
         .restart-button {
-          font-family: 'JetBrains Mono', monospace;
+          font-family: 'IBM Plex Mono', monospace;
           font-size: 0.7rem;
           padding: 0.5rem 1rem;
           background: transparent;
@@ -1037,7 +1045,7 @@ export default function App() {
           color: var(--text-muted);
           cursor: pointer;
           text-decoration: underline;
-          transition: color 0.2s ease;
+          transition: color 0.15s ease;
         }
 
         .restart-button:hover {
